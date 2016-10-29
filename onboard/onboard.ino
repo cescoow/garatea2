@@ -2,12 +2,16 @@
 #include "BUZZ.hpp"
 #include "SERVO.h"
 #include "GPS.h"
+#include "UVX.h"
 #include <avr/wdt.h> // Biblioteca utilizada pelo watchdog timer.
 
 // Pin Define
 #define DHTPIN 2
-#define BUZZPIN 1 // VALOR A CORRIGIR
-#define SERVOPIN 1 // VALOR A CORRIGIR
+#define BUZZPIN 1 // Valor a ser corrigido
+#define SERVOPIN 1 // Valor a ser corrigido
+#define UVA_pin 1 // Valor a ser corrigido
+#define UVB_pin 1 // Valor a ser corrigido
+#define UVC_pin 1 // Valor a ser corrigido
 
 #define DHTTYPE DHT22
 
@@ -15,6 +19,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 BUZZ buzzer(BUZZPIN);
 SERVO myServo(SERVOPIN);
+UVX uvx(UVA_pin, UVB_pin, UVC_pin);
 
 float hic;
 float h;
@@ -30,6 +35,8 @@ void setup(){
 void loop(){
 
     wdt_reset(); // Funcao que reseta o timer
+
+    uvx.readUVX();
 
     delay(2000);
     h = dht.readHumidity();
